@@ -9,9 +9,9 @@ def pf(msg, outfile=sys.stdout):
 def print_tweet(t, outfile=sys.stdout):
     pf("id_str:\t\t%s" % t['id_str'], outfile)
     pf("created_at:\t%s" % t['created_at'], outfile)
-    pf("text:\t\t%s" % t['text'], outfile)
-    #pf("text:\t\t%s" % t['text'].encode('utf-8'), outfile)
-    
+    #pf("text:\t\t%s" % t['text'], outfile)
+    pf("text:\t\t%s" % t['text'].encode('utf-8'), outfile)
+
     return parse_datetime(t['created_at'])
 
 def summary(inputfile, outfile=sys.stdout):
