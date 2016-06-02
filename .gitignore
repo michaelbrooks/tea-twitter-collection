@@ -62,3 +62,6 @@ target/
 .ipynb_checkpoints
 
 twitter_keys.py
+*.json
+*.csv
+*.err
