@@ -32,14 +32,20 @@ Collect tweets:
 python collection.py query.json 2> query.err
 ```
 
-Convert tweets to csv:
-
-```bash
-python conversion.py < query.raw.json > query.raw.csv
-```
-
 Get info about the first and last tweets in a raw json file:
 
 ```bash
 python first_last.py query.raw.json
+```
+
+Sample lines in a file:
+
+```bash
+python sample.py 0.10 < query.raw.json > query.sampled.json
+```
+
+Convert tweets to csv:
+
+```bash
+python conversion.py < query.raw.json > query.raw.csv
 ```
