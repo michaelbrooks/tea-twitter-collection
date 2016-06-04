@@ -57,3 +57,12 @@ for f in *.raw.json; do
   python conversion.py $f > $( basename $f .json).csv;
 done
 ```
+
+Combine a bunch of CSV files together:
+
+```
+# Get the header from one csv file
+head -n 1 first_csv.raw.csv > combined.csv
+# Get the body of all of the rest (watch out you aren't reading from the output file though)
+gtail -q -n +2 *.raw.csv >> combined.csv
+```
