@@ -2,17 +2,25 @@
 import sys
 import json
 from tweepy.utils import parse_datetime
+from dateutil import tz
+
+from_zone = tz.tzutc()
+to_zone = tz.tzlocal()
 
 def pf(msg, outfile=sys.stdout):
     print >> outfile, msg
 
 def print_tweet(t, outfile=sys.stdout):
+
+    created_at = parse_datetime(t['created_at']).replace(tzinfo=from_zone)
+    local_created_at = created_at.astimezone(to_zone)
+
     pf("id_str:\t\t%s" % t['id_str'], outfile)
-    pf("created_at:\t%s" % t['created_at'], outfile)
+    pf("created_at:\t%s (utc: %s, local: %s)" % (t['created_at'], created_at, local_created_at), outfile)
     #pf("text:\t\t%s" % t['text'], outfile)
     pf("text:\t\t%s" % t['text'].encode('utf-8'), outfile)
 
-    return parse_datetime(t['created_at'])
+    return created_at
 
 def summary(inputfile, outfile=sys.stdout):
     with open(inputfile, "rb") as f:
