@@ -47,5 +47,13 @@ python sample.py 0.10 < query.raw.json > query.sampled.json
 Convert tweets to csv:
 
 ```bash
-python conversion.py < query.raw.json > query.raw.csv
+python conversion.py query.raw.json > query.raw.csv
+```
+
+Convert a bunch of tweet json files to csv:
+
+```bash
+for f in *.raw.json; do
+  python conversion.py $f > $( basename $f .json).csv;
+done
 ```

@@ -1,3 +1,4 @@
+import io
 import sys
 import json
 import csv
@@ -69,8 +70,8 @@ def find_header():
             break
     print keys.keys()
 
-def convert_to_csv():
-    header = [u'contributors', u'coordinates', u'created_at', u'entities', u'favorite_count',
+def convert_to_csv(input_filename):
+    header = ['_source_file_', u'contributors', u'coordinates', u'created_at', u'entities', u'favorite_count',
                 u'favorited', u'geo', u'id_str', u'in_reply_to_screen_name',
                 u'in_reply_to_status_id_str', u'in_reply_to_user_id_str', u'is_quote_status',
                 u'lang', u'metadata_iso_language_code', u'metadata_result_type', u'place',
@@ -99,22 +100,26 @@ def convert_to_csv():
     writer = csv.DictWriter(sys.stdout, header, restval='', extrasaction='ignore')
     writer.writeheader()
     lineno = 0
-    for line in sys.stdin:
-        lineno += 1
 
-        try:
-            raw = json.loads(line)
-        except ValueError:
-            log("Parse error on line %d" % lineno)
-            continue
+    with io.open(input_filename, encoding='utf-8') as inputfile:
+        for line in inputfile:
+            lineno += 1
 
-        f = flatten(raw)
+            try:
+                raw = json.loads(line)
+            except ValueError:
+                log("Parse error on line %d" % lineno)
+                continue
 
-        try:
-            writer.writerow(f)
-        except:
-            print f
-            break
+            f = flatten(raw)
+            f['_source_file_'] = input_filename
+
+            try:
+                writer.writerow(f)
+            except:
+                print f
+                break
 if __name__ == '__main__':
     #find_header()
-    convert_to_csv()
+    input_filename = sys.argv[1]
+    convert_to_csv(input_filename)
