@@ -30,7 +30,7 @@ def flatten(d):
         if key == 'created_at':
             value = parse_datetime(value).replace(tzinfo=utc).isoformat()
 
-        if key == 'text':
+        if key == 'text' or key == 'description' or key == 'location':
             value = value.replace('\n', ' ').replace('\r', '')
 
         if isinstance(value, dict):
