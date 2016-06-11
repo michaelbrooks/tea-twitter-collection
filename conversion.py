@@ -30,6 +30,9 @@ def flatten(d):
         if key == 'created_at':
             value = parse_datetime(value).replace(tzinfo=utc).isoformat()
 
+        if key == 'text':
+            value = value.replace('\n', ' ').replace('\r', '')
+
         if isinstance(value, dict):
             if key in excluded_keys:
                 result[key] = bool(value)
