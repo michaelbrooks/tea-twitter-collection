@@ -73,10 +73,9 @@ chunksize = 20000
 rows_read = 0
 if_exists = 'replace'
 for df in pd.read_csv(csv_file, chunksize=chunksize, iterator=True, encoding='utf-8', dtype=dtypes):
-    rows_read += df.size
+    rows_read += len(df)
     print '{} seconds: completed {} rows'.format((dt.datetime.now() - start).seconds, rows_read)
     df.to_sql(table_name, engine, if_exists=if_exists, index=False)
     if_exists = 'append'
 
-print '{} seconds: completed {} rows'.format((dt.datetime.now() - start).seconds, rows_read)
 print 'Completed all rows.'
