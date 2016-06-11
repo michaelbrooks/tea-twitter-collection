@@ -2,7 +2,7 @@
 
 Get set up:
 ```bash
-conda create -n twitter python=2.7
+conda create -n twitter python=2.7 sqlalchemy pandas psycopg2
 source activate twitter
 pip install -r requirements.txt
 ```
