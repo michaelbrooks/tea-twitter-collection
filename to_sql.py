@@ -71,11 +71,12 @@ dtypes = {
 start = dt.datetime.now()
 chunksize = 20000
 chunks_read = 0
+if_exists = 'replace'
 for df in pd.read_csv(csv_file, chunksize=chunksize, iterator=True, encoding='utf-8', dtype=dtypes):
-    df.set_index('id_str')
     chunks_read += 1
     print '{} seconds: completed {} rows'.format((dt.datetime.now() - start).seconds, chunks_read*chunksize)
-    df.to_sql(table_name, engine, if_exists='append')
+    df.to_sql(table_name, engine, if_exists=if_exists, index=False)
+    if_exists = 'append'
 
 print '{} seconds: completed {} rows'.format((dt.datetime.now() - start).seconds, chunks_read*chunksize)
 print 'Completed all rows.'
