@@ -4,11 +4,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 import datetime as dt
 
-#host_name = '162.243.130.6'
+#host_name = ''
 host_name = 'localhost'
 username = 'root'
-password = 'teatime82'
-dbname = 'twitter'
+password = ''
+dbname = ''
 port = 5432
 
 csv_file = sys.argv[1]
